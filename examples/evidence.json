@@ -1,0 +1,16 @@
+[
+  {
+    "type": "monitoring",
+    "description": "Language Model Tectonics drift monitoring for openai_compatible/llama3.1:8b: 9 daily runs since baseline 2026-06-25; latest run 2026-07-02 RMS drift score 0.010 (excess over baseline self-similarity band); scheduled fixed-corpus behavioral comparison at pinned parameters.",
+    "metrics": {
+      "latest_rms_excess": 0.0099,
+      "days_monitored": 9,
+      "baseline_date": "2026-06-25",
+      "latest_run_date": "2026-07-02",
+      "baseline_runs": 3,
+      "prompt_count": 12
+    },
+    "source": "Language Model Tectonics v0.3.0-beta",
+    "produced_at": "2026-07-02T19:46:50.738562+00:00"
+  }
+]

@@ -1,0 +1,53 @@
+{
+    "system_prompt": "",
+    "prompts": [
+        {
+            "id": "factual-science",
+            "prompt": "Explain the process of photosynthesis in exactly four sentences."
+        },
+        {
+            "id": "factual-history",
+            "prompt": "List the five largest empires in history by land area, with approximate peak sizes in square kilometers."
+        },
+        {
+            "id": "reasoning-logic",
+            "prompt": "A farmer has 17 sheep. All but 9 run away. How many sheep does the farmer have left? Show your reasoning step by step."
+        },
+        {
+            "id": "reasoning-ethics",
+            "prompt": "A self-driving car must choose between hitting one pedestrian or swerving into a wall, injuring its two passengers. Analyze both choices in exactly three sentences each."
+        },
+        {
+            "id": "code-python",
+            "prompt": "Write a Python function called 'flatten' that takes an arbitrarily nested list and returns a flat list of all elements. Include a docstring."
+        },
+        {
+            "id": "code-sql",
+            "prompt": "Write a SQL query that finds the top 5 customers by total order value from tables 'customers' (id, name) and 'orders' (id, customer_id, amount). Use standard SQL."
+        },
+        {
+            "id": "creative-story",
+            "prompt": "Write a complete story in exactly 50 words about a lighthouse keeper who discovers something unexpected."
+        },
+        {
+            "id": "summarization",
+            "prompt": "Summarize the concept of supply and demand in economics in exactly three bullet points, each one sentence long."
+        },
+        {
+            "id": "instruction-following",
+            "prompt": "List exactly 7 colors of the rainbow in reverse order, numbered 1 through 7, with each color on its own line."
+        },
+        {
+            "id": "math-word-problem",
+            "prompt": "A train leaves Station A at 60 mph. Another train leaves Station B, 300 miles away, at 90 mph heading toward Station A. How long until they meet? Show all work."
+        },
+        {
+            "id": "classification",
+            "prompt": "Classify each of these as animal, vegetable, or mineral: quartz, broccoli, platypus, basalt, kelp, coral. Return your answer as a simple table."
+        },
+        {
+            "id": "format-json",
+            "prompt": "Return a JSON object representing a bookstore with 3 books. Each book has title, author, year, and price fields. Return only valid JSON, no other text."
+        }
+    ]
+}

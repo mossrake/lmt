@@ -1,0 +1,49 @@
+{
+    "api_keys": {
+        "openai": "env:OPENAI_API_KEY",
+        "azure_openai": "env:AZURE_OPENAI_API_KEY",
+        "anthropic": "env:ANTHROPIC_API_KEY",
+        "openai_compatible": ""
+    },
+    "baseline_runs": 3,
+    "manifests_dir": "",
+    "models": [
+        {
+            "provider": "openai",
+            "family": "gpt-4o"
+        },
+        {
+            "provider": "anthropic",
+            "family": "claude-sonnet-4-6"
+        },
+        {
+            "provider": "azure_openai",
+            "family": "gpt-4.1",
+            "endpoint": "https://YOUR-RESOURCE.openai.azure.com/",
+            "deployment": "gpt-4.1",
+            "api_version": "2024-12-01-preview"
+        },
+        {
+            "provider": "openai_compatible",
+            "family": "llama3.1:8b",
+            "endpoint": "http://localhost:11434/v1"
+        }
+    ],
+    "drift_zones": {
+        "stable": {
+            "below": 0.05,
+            "label": "Stable",
+            "color": "#22c55e"
+        },
+        "drift": {
+            "below": 0.15,
+            "label": "Drift Detected",
+            "color": "#eab308"
+        },
+        "significant": {
+            "above": 0.15,
+            "label": "Significant Shift",
+            "color": "#ef4444"
+        }
+    }
+}

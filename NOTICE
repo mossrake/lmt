@@ -1,0 +1,22 @@
+Language Model Tectonics (LMT)
+Copyright 2026 Mossrake Group, LLC
+
+This product includes Language Model Tectonics, a drift detection tool for
+language model endpoints, developed by Mossrake Group, LLC
+(https://mossrake.ai).
+
+Language Model Tectonics detects and dates change in model endpoints.
+It does not rank, grade, or judge them.
+
+LMT emits drift evidence conformant to the Mossrake Language Model
+Diligence specification (https://github.com/mossrake/lmd-spec).
+
+Language Model Tectonics(TM), Mossrake(R), and Mossrake Language Model
+Diligence(TM) are trademarks of Mossrake Group, LLC. No trademark rights are
+granted by this NOTICE or the Apache License 2.0; see Section 6 of the
+LICENSE. Truthful, nominative references to this tool by name are ordinary
+fair use and do not require permission. Forks and derivative distributions
+of this software must be renamed: they must not use the Language Model
+Tectonics name or any confusingly similar name, and must not state or imply
+Mossrake origin, certification, verification, or endorsement. Any other use
+of the marks requires express written consent.

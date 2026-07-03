@@ -1,0 +1,47 @@
+{
+  "lmd_spec_version": "0.1",
+  "subject": {
+    "process_description": "A language model reviews incoming invoices against purchase orders and auto-approves matched items for payment up to $5,000.",
+    "model": {
+      "provider": "openai_compatible",
+      "model_id": "llama3.1:8b",
+      "endpoint": "http://llm.internal:11434/v1",
+      "pinning": "model"
+    },
+    "industry": "Financial Services"
+  },
+  "consequence": {
+    "level": 4,
+    "verbatim": "Incorrect approvals create direct financial loss and potential audit findings."
+  },
+  "coverage": {
+    "identity": {
+      "score": 4,
+      "verbatim": "Model and tag pinned in the serving config.",
+      "mechanisms": [
+        "Model tag pinned in deployment configuration"
+      ]
+    },
+    "drift": {
+      "score": 4,
+      "verbatim": "Language Model Tectonics runs daily via cron against pinned parameters.",
+      "mechanisms": [
+        "Scheduled daily LMT run with default severity zones"
+      ]
+    },
+    "verification": {
+      "score": 3,
+      "verbatim": "Approvals above $1,000 are spot-checked weekly.",
+      "mechanisms": [
+        "Weekly sample review by accounts payable"
+      ]
+    },
+    "recovery": {
+      "score": 3,
+      "verbatim": "Discrepancies surface in the monthly reconciliation.",
+      "mechanisms": [
+        "Monthly financial reconciliation"
+      ]
+    }
+  }
+}

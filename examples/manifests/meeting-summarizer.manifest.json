@@ -1,0 +1,35 @@
+{
+  "lmd_spec_version": "0.1",
+  "subject": {
+    "process_description": "A language model summarizes meeting transcripts for the engineering team. Summaries are posted in an internal channel.",
+    "model": {
+      "provider": "openai_compatible",
+      "model_id": "llama3.1:8b",
+      "endpoint": "http://llm.internal:11434/v1",
+      "pinning": "model"
+    },
+    "industry": "Technology"
+  },
+  "consequence": {
+    "level": 2,
+    "verbatim": "Wrong summaries cause minor rework. No external impact."
+  },
+  "coverage": {
+    "identity": {
+      "score": 4,
+      "verbatim": "Same pinned internal endpoint as other workloads."
+    },
+    "drift": {
+      "score": 4,
+      "verbatim": "Covered by the same daily Language Model Tectonics run."
+    },
+    "verification": {
+      "score": 2,
+      "verbatim": "Meeting attendees see summaries and would catch major errors."
+    },
+    "recovery": {
+      "score": 3,
+      "verbatim": "Errors caught within a day or two at the next standup."
+    }
+  }
+}

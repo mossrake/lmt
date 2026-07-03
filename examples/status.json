@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-07-03T18:42:49.459601+00:00",
+  "tool": "Language Model Tectonics v0.3.0-beta",
+  "lookback_days": 30,
+  "models": [
+    {
+      "model": "openai_compatible/llama3.1:8b",
+      "latest_run": "2026-07-02",
+      "rms_excess": 0.0072,
+      "zone": "stable",
+      "zone_label": "Stable",
+      "version": "llama3.1:8b",
+      "baseline_date": "2026-06-25",
+      "noise_band_rms": 0.2074,
+      "max_consequence": 4,
+      "consuming_processes": [
+        {
+          "process": "A language model reviews incoming invoices against purchase orders and auto-approves matched items for payment up to ...",
+          "level": 4,
+          "manifest": "invoice-approval.manifest.json"
+        },
+        {
+          "process": "A language model summarizes meeting transcripts for the engineering team. Summaries are posted in an internal channel.",
+          "level": 2,
+          "manifest": "meeting-summarizer.manifest.json"
+        }
+      ],
+      "version_changes": [],
+      "history": [
+        {
+          "date": "2026-06-25",
+          "rms_excess": 0.0,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-06-26",
+          "rms_excess": 0.0048,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-06-27",
+          "rms_excess": 0.0065,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-06-28",
+          "rms_excess": 0.0042,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-06-29",
+          "rms_excess": 0.0091,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-06-30",
+          "rms_excess": 0.0062,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-07-01",
+          "rms_excess": 0.0057,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-07-02",
+          "rms_excess": 0.0072,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        }
+      ]
+    }
+  ]
+}
