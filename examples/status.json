@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-07-03T18:42:49.459601+00:00",
-  "tool": "Language Model Tectonics v0.3.0-beta",
+  "generated_at": "2026-07-04T13:23:45.632006+00:00",
+  "tool": "Language Model Tectonics v0.3.2-beta",
+  "suite": "default",
   "lookback_days": 30,
   "models": [
     {
       "model": "openai_compatible/llama3.1:8b",
-      "latest_run": "2026-07-02",
-      "rms_excess": 0.0072,
+      "latest_run": "2026-07-03",
+      "rms_excess": 0.0099,
       "zone": "stable",
       "zone_label": "Stable",
       "version": "llama3.1:8b",
@@ -72,6 +73,12 @@
         {
           "date": "2026-07-02",
           "rms_excess": 0.0072,
+          "zone": "stable",
+          "version": "llama3.1:8b"
+        },
+        {
+          "date": "2026-07-03",
+          "rms_excess": 0.0099,
           "zone": "stable",
           "version": "llama3.1:8b"
         }

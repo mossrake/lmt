@@ -62,6 +62,11 @@ python tectonics.py run --rebaseline --model openai/gpt-4o
                                        # change is accepted as the new normal
 python tectonics.py report             # regenerate chart from stored data
 python tectonics.py evidence           # emit LMD-conformant drift evidence
+
+python tectonics.py run --prompts invoice.json
+                                       # run a use-case suite (own database,
+                                       # report, and evidence files derived
+                                       # from the suite filename)
 ```
 
 Output: `tectonics_report.png` (and `lmt_evidence.json` from `evidence`).
@@ -86,6 +91,42 @@ not.** Three supported patterns, in recommended order:
 `config.json`, `config.local.json`, and `tectonics.db` are all listed in
 `.gitignore`. The database stores full model responses — treat it as
 sensitive if your prompts are.
+
+## Suites: one prompts file per use case
+
+A **suite** is a prompts file. The shipped `prompts.json` is the
+**baseline suite** — endpoint-generic probes that answer "is the endpoint
+itself stable?" What most teams care about more is drift on *their use
+case*: its system prompt, its kind of inputs. That's just another prompts
+file:
+
+```bash
+python tectonics.py run --prompts invoice.json     # daily, via cron
+python tectonics.py run --prompts drafting.json
+python tectonics.py run                            # baseline suite
+```
+
+Each suite gets its own database, baselines, noise bands, report, and
+evidence, with filenames derived from the suite name (`invoice.json` →
+`invoice.db`, `invoice_report.png`, `invoice_evidence.json`; `--db PATH`
+overrides). The feed and report carry the suite name, so a dashboard
+merging several `status --json` outputs can tell rows apart. Editing one
+suite re-baselines that suite only — the others are untouched.
+
+Running the baseline suite *alongside* your use-case suites buys a
+two-layer diagnostic: the baseline suite moves but yours doesn't → the
+provider changed something your use case doesn't touch; **yours moves but
+the baseline doesn't → the change lives exactly in the behavioral region
+your workflow depends on** — the highest-value alarm this instrument can
+produce. The per-suite noise band is equally informative: it measures how
+bounded *that use case* is (a JSON-constrained workflow will show a near-
+zero band; a free-text one won't), which is precisely how it should be
+read when claiming drift coverage for a high-consequence process.
+
+One rule for suite content: prompts should be **sanitized representatives**
+of the workload — same structure, same constraints, synthetic content.
+Suite files and their databases (which store full responses) inherit the
+keep-it-private guidance below; never put customer data in a probe.
 
 ## Bring your own prompts
 

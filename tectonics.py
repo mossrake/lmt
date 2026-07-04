@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.colors import to_rgba
 
-__version__ = "0.3.1-beta"
+__version__ = "0.3.2-beta"
 
 # ---------------------------------------------------------------------------
 # Paths & constants
@@ -43,6 +43,7 @@ LOCAL_CONFIG_PATH = SCRIPT_DIR / "config.local.json"
 PROMPTS_PATH = SCRIPT_DIR / "prompts.json"
 OUTPUT_PATH = SCRIPT_DIR / "tectonics_report.png"
 EVIDENCE_PATH = SCRIPT_DIR / "lmt_evidence.json"
+SUITE_NAME = "default"
 LOOKBACK_DAYS = 30
 
 # Default environment variable per provider, used when config gives no key.
@@ -713,8 +714,9 @@ def generate_report(conn, config):
 
     fig.suptitle("Language Model Tectonics\u2122  (\u03b2)",
                  fontsize=16, fontweight="bold", y=0.985)
+    suite_tag = f"suite: {SUITE_NAME}  \u2022  " if SUITE_NAME != "default" else ""
     ax.text(0.5, n + 1.62,
-            f"{days_n}-day drift status grid  \u2022  v{__version__}  \u2022  "
+            f"{suite_tag}{days_n}-day drift status grid  \u2022  v{__version__}  \u2022  "
             f"Generated {today.isoformat()}  \u2022  "
             f"values are RMS excess over each model's noise band",
             fontsize=9.5, color="#555", ha="center")
@@ -1024,6 +1026,7 @@ def print_status(conn, config, as_json=False, days=LOOKBACK_DAYS):
         print(json.dumps({
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "tool": f"Language Model Tectonics v{__version__}",
+            "suite": SUITE_NAME,
             "lookback_days": days,
             "models": status,
         }, indent=2))
@@ -1104,7 +1107,9 @@ def emit_evidence(conn, config):
         items.append({
             "type": "monitoring",
             "description": (
-                f"Language Model Tectonics drift monitoring for {mk}: "
+                f"Language Model Tectonics drift monitoring for {mk}"
+                + (f" (suite: {SUITE_NAME})" if SUITE_NAME != "default" else "")
+                + ": "
                 f"{len(days)} daily runs since baseline {baseline_date}; "
                 f"latest run {latest} RMS drift score "
                 f"{latest_rms:.3f} (excess over baseline self-similarity band); "
@@ -1141,6 +1146,21 @@ def main():
     )
     sub = parser.add_subparsers(dest="command")
 
+    def add_suite_args(p):
+        p.add_argument(
+            "--prompts", metavar="PATH", default=None,
+            help="Prompt suite file to use (default: prompts.json next to "
+                 "the script). One file per use case; the shipped library "
+                 "is the endpoint-generic baseline suite",
+        )
+        p.add_argument(
+            "--db", metavar="PATH", default=None,
+            help="Database for this suite (default: derived from the suite "
+                 "filename, e.g. invoice.json -> invoice.db; or "
+                 "tectonics.db for the default suite). Report and evidence "
+                 "filenames are derived the same way",
+        )
+
     def add_manifests_arg(p):
         p.add_argument(
             "--manifests", metavar="DIR", default=None,
@@ -1169,9 +1189,11 @@ def main():
              "manifest coverage are treated as meeting the floor",
     )
     add_manifests_arg(run_p)
+    add_suite_args(run_p)
 
     report_p = sub.add_parser("report", help="Regenerate report from existing data")
     add_manifests_arg(report_p)
+    add_suite_args(report_p)
 
     status_p = sub.add_parser(
         "status",
@@ -1183,16 +1205,34 @@ def main():
         help=f"History window in days (default {LOOKBACK_DAYS})",
     )
     add_manifests_arg(status_p)
+    add_suite_args(status_p)
 
-    sub.add_parser(
+    evidence_p = sub.add_parser(
         "evidence",
         help="Emit LMD-spec-conformant drift evidence (lmt_evidence.json)",
     )
+    add_suite_args(evidence_p)
 
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
         sys.exit(1)
+
+    # Suite resolution: a suite is a prompts file with its own database and
+    # derived output filenames. Defaults are unchanged (single-suite install).
+    global PROMPTS_PATH, DB_PATH, OUTPUT_PATH, EVIDENCE_PATH, SUITE_NAME
+    if getattr(args, "prompts", None):
+        PROMPTS_PATH = Path(args.prompts)
+        stem = PROMPTS_PATH.stem
+        SUITE_NAME = stem
+        DB_PATH = PROMPTS_PATH.with_name(f"{stem}.db")
+        OUTPUT_PATH = PROMPTS_PATH.with_name(f"{stem}_report.png")
+        EVIDENCE_PATH = PROMPTS_PATH.with_name(f"{stem}_evidence.json")
+    if getattr(args, "db", None):
+        DB_PATH = Path(args.db)
+        stem = DB_PATH.stem
+        OUTPUT_PATH = DB_PATH.with_name(f"{stem}_report.png")
+        EVIDENCE_PATH = DB_PATH.with_name(f"{stem}_evidence.json")
 
     config = load_config()
     if getattr(args, "manifests", None):
