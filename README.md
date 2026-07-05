@@ -92,6 +92,9 @@ not.** Three supported patterns, in recommended order:
 `.gitignore`. The database stores full model responses — treat it as
 sensitive if your prompts are.
 
+LMT makes standard API calls from your own accounts; nothing is
+transmitted to Mossrake.
+
 ## Suites: one prompts file per use case
 
 A **suite** is a prompts file. The shipped `prompts.json` is the
